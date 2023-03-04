@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 const SignIn = (props) => {
   const event = props.event
+  const event2 = props.event2
 
   const logIn = (values) => {
     let username = values["email"];
@@ -47,9 +48,10 @@ const SignIn = (props) => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        console.log("hiiieee")
         logIn(values)
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+        event2()
+        setTimeout(() => {          
           setSubmitting(false);
         }, 400);
       }}
@@ -86,10 +88,10 @@ const SignIn = (props) => {
           <button type="submit" disabled={isSubmitting}>
             Submit
           </button>
-          <span>Not a User yet? <button onClick={event}>Sign Up</button> here</span>
         </form>
       )}
     </Formik>
+      <span>Not a User yet? <button onClick={event} type="button">Sign Up</button></span>
     </Container>
   )
 }
