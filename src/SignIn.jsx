@@ -5,32 +5,32 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+
+export const logIn = (values) => {
+  let username = values["email"];
+  let password = values["password"]
+
+  const token = `${username}:${password}`;
+  const encodedToken = window.btoa(token)
+  const session_url = 'http://localhost:3000/api-keys';
+
+  let config = {
+    method: 'post',
+    url: session_url,
+    headers: { 'Authorization': 'Basic '+ encodedToken }
+  };
+
+  axios(config)
+  .then(function (response) {
+    window.localStorage.setItem('token', response.data["token"])
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 const SignIn = (props) => {
   const event = props.event
   const event2 = props.event2
-
-  const logIn = (values) => {
-    let username = values["email"];
-    let password = values["password"]
-
-    const token = `${username}:${password}`;
-    const encodedToken = window.btoa(token)
-    const session_url = 'http://localhost:3000/api-keys';
-
-    let config = {
-      method: 'post',
-      url: session_url,
-      headers: { 'Authorization': 'Basic '+ encodedToken }
-    };
-
-    axios(config)
-    .then(function (response) {
-      window.localStorage.setItem('token', response.data["token"])
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
 
   return (
     <Container>

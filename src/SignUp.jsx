@@ -1,8 +1,31 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { Container } from 'react-bootstrap'
+import axios from 'axios'
+import { logIn } from './SignIn'
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const event2 = props.event2
+  const event3 = props.event3
+  const createNewUser = (values) => {
+    axios
+        .post("http://localhost:3000/users", values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          const logInValues = {email: values.email, password: values.password}
+          logIn(logInValues)
+          event2()
+          event3(false)
+        })
+        
+        .catch((err) => {
+          console.log(err);
+        });
+
+  }
   return (
     <Container>
       <Formik
@@ -19,8 +42,9 @@ const SignUp = () => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        createNewUser(values) 
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          // alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }, 400);
       }}
@@ -74,7 +98,7 @@ const SignUp = () => {
           {errors.password && touched.password && errors.password}
           <input
             placeholder="Re-Enter Password"
-            type="password_confirmation"
+            type="password"
             name="password_confirmation"
             onChange={handleChange}
             onBlur={handleBlur}

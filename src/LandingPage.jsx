@@ -26,7 +26,7 @@ const LandingPage = () => {
     <div>
       <h1>Welcome to Qind</h1>
       { showSignIn && <SignIn event={handleClick} event2={signOutButton} />}
-      { showSignUp && <SignUp />}
+      { showSignUp && <SignUp event2={signOutButton} event3={setShowSignUp} />}
       { showSignOut && <button onClick={signOut} type="button">Sign Out</button>}
     </div>
   )
